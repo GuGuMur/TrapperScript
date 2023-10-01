@@ -60,7 +60,7 @@ def cell_deal_token(data: dict):
     return TEMPLATES.render(T_NAME="trapper.jinja2", **result)
 
 
-async def deal_token(stageinfo: dict) -> str:
+def deal_token(stageinfo: dict) -> str:
     traptext = []
     mainparams = ["predefines", "hardPredefines"]
     subparams = ["tokenInsts", "tokenCards"]
@@ -76,7 +76,7 @@ async def deal_token(stageinfo: dict) -> str:
             for subtitle in subparams:
                 if nextdict := return_dict_if_exist(subtitle, subdict):
                     for t in nextdict:
-                        traptext.append(f"{await cell_deal_token(data=t)}")
+                        traptext.append(f"{cell_deal_token(data=t)}")
 
             # for k,v in stageinfo[maintitle].items():
             #     #k=["characterInsts","tokenInsts","characterCards","tokenCards"]
