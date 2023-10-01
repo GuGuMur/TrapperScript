@@ -41,7 +41,7 @@ def clean_text(text: str):
 def return_skill_name(skillId: str):
     return skill_table[skillId]["levels"][0]["name"]
 
-def get_char_name(self, id: str) -> str:
+def get_char_name(id: str) -> str:
     return character_table[id]["name"]
 
 def cell_deal_token(data: dict):
@@ -83,7 +83,7 @@ def deal_token(stageinfo: dict) -> str:
             #     if v:
             #         for t in v:
     if traptext:
-        traptext = "== 未分类装置 ==\n" + "\n".join(list(set(traptext)))
+        traptext = "==未分类装置==\n" + "\n".join(list(set(traptext)))
         return clean_text(traptext)
     else:
         return ""

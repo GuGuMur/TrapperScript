@@ -15,8 +15,11 @@ async def main(password:str):
     await bot.login()
     jspath = str (Path(__file__).parent / "main.js" )
     js = Path(jspath).read_text()
-    await bot.edit_page(title="User:GuBot/trapper.js",text=js,summary="//Edit by GithubAction")
-    print(js)
+    ori = await bot.get_page_text("User:GuBot/trapper.js")
+    if js == ori:
+        print("PASS")
+    else:
+        await bot.edit_page(title="User:GuBot/trapper.js",text=js,summary="//Edit by GithubAction")
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='update js')
     parser.add_argument('password')
