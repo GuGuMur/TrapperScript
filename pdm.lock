@@ -6,7 +6,7 @@ groups = ["default"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:a37aaf52d06547c794f2f2d1fbf81c2b8d5b40332d11841caecbb4643e423d22"
+content_hash = "sha256:99676fdc6c99e40a8e165077a07beb7847d3c108d354f4733be52986f7294660"
 
 [[package]]
 name = "annotated-types"
@@ -30,15 +30,6 @@ dependencies = [
 files = [
     {file = "anyio-3.7.1-py3-none-any.whl", hash = "sha256:91dee416e570e92c64041bd18b900d1d6fa78dff7048769ce5ac5ddad004fbb5"},
     {file = "anyio-3.7.1.tar.gz", hash = "sha256:44a3c9aba0f5defa43261a8b3efb97891f2bd7d804e0e1f56419befa1adfc780"},
-]
-
-[[package]]
-name = "asyncio"
-version = "3.4.3"
-summary = "reference implementation of PEP 3156"
-files = [
-    {file = "asyncio-3.4.3-py3-none-any.whl", hash = "sha256:c4d18b22701821de07bd6aea8b53d21449ec0ec5680645e5317062ea21817d2d"},
-    {file = "asyncio-3.4.3.tar.gz", hash = "sha256:83360ff8bc97980e4ff25c964c7bd3923d333d177aa4f7fb736b019f26c7cb41"},
 ]
 
 [[package]]
@@ -200,12 +191,11 @@ files = [
 
 [[package]]
 name = "mwbot"
-version = "1.0.20"
+version = "1.0.21"
 requires_python = ">=3.9,<4.0"
 summary = "个性化封装的Python Mediawiki API库"
 dependencies = [
     "Jinja2>=3.1.2",
-    "asyncio>=3.4.3",
     "httpx>=0.23.3",
     "loguru>=0.6.0",
     "mwparserfromhell>=0.6.4",
@@ -215,8 +205,8 @@ dependencies = [
     "xmltodict>=0.13.0",
 ]
 files = [
-    {file = "mwbot-1.0.20-py3-none-any.whl", hash = "sha256:d1943ecd31b8d4339dd296b99879c237ed4a4dfa8fa8a9b15532a12195794e63"},
-    {file = "mwbot-1.0.20.tar.gz", hash = "sha256:9695836c3b51ce66f446b1327efbb937d5e310550de5a22e861c0d83f56b7e70"},
+    {file = "mwbot-1.0.21-py3-none-any.whl", hash = "sha256:91d5a41c85ba79088d53b1a1044b53083515814c62c2f33c32ba110cc35eca29"},
+    {file = "mwbot-1.0.21.tar.gz", hash = "sha256:30f47dadd2e1ffbf7ef94b29bcd5227e88809f1a39790fd335ec802dbec2b4f3"},
 ]
 
 [[package]]
