@@ -175,7 +175,7 @@ async def return_text(pagetext: str):
         if pagetext != wikicode:
             return {"status": True, "text": wikicode}
         else:
-            return {"status": True, "text": wikicode}
+            return {"status": False, "text": wikicode}
     except Exception as e:
         logger.warning(f"关卡出现bug！{e}")
         return {"status": False, "text": pagetext}
