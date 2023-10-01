@@ -1,14 +1,10 @@
 async function get_data(content) {
-    const postData = {
-        // 长参数名1
-        content: content,
-    };
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData)
+        body: JSON.stringify({content: content,})
     };
-    await fetch(`https://trapper-script.gudev.online/main`,requestOptions)
+    await fetch(`https://trapper-script.gudev.online/main`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
