@@ -30,8 +30,8 @@ async def root(content: str):
 
 @app.get("/favicon.ico")
 async def favicon():
-    return FileResponse("./assets/favicon.ico")
+    return FileResponse("favicon.ico")
 
 
-if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)

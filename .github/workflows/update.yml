@@ -16,8 +16,10 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
-
-      - uses: pdm-project/setup-pdm@v3
-
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
+      # You are now able to use PDM in your workflow
+      - name: Install dependencies
+        run: pdm install
       - name: Edit page
-        run: pdm init & pdm run python script/update.py ${{ secrets.PRTS_BOT_TOKEN }}
+        run: pdm run python script/update.py ${{ secrets.PRTS_BOT_TOKEN }}

@@ -3,10 +3,11 @@
 	"public": false,
 	"builds": [
     { "src": "src/*.py", "use": "@vercel/python" },
-    { "src": ".jinja2", "use": "@vercel/static" }
+    { "src": "*.jinja2", "use": "@vercel/static" },
+    { "src": "*.ico", "use": "@vercel/static" }
   ],
 	"routes": [
-		{ "src": "/", "dest": "src/app.py" },
+		{ "src": "/.*", "dest": "src/app.py" },
 		{ "src": "/docs", "dest": "src/app.py" },
 		{ "src": "/openapi.json", "dest": "src/app.py" }
 	]
