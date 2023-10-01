@@ -149,33 +149,33 @@ async def return_text(pagetext: str):
     wikicode = pagetext[:]
     try:
         stageinfo = await arktool.get_stage_info(pagetext)
+        tiletext = deal_tiles(stageinfo=stageinfo)
+        tokentext = deal_token(stageinfo=stageinfo)
+
+        if tokentext:
+            if "==作战进度奖励==" in wikicode:
+                wikicode = wikicode.replace("==作战进度奖励==", f"{tokentext}\n==作战进度奖励==")
+            elif "==材料掉落==" in wikicode:
+                wikicode = wikicode.replace("==材料掉落==", f"{tokentext}\n==材料掉落==")
+            else:
+                wikicode = wikicode.replace("==注释与链接==", f"{tokentext}\n==注释与链接==")
+        else:
+            pass
+        # --------------------------------------------------
+        if tiletext:
+            wikicode = mwparserfromhell.parse(wikicode)
+            for template in wikicode.filter_templates():
+                if template.name.matches("普通关卡信息") or template.name.matches("剿灭关卡信息"):
+                    template.add("特殊地形效果", f"{tiletext}")
+                    continue
+            wikicode = str(wikicode)
+        else:
+            pass
+        # FINALLY!
+        if pagetext != wikicode:
+            return {"status": True, "text": wikicode}
+        else:
+            return {"status": True, "text": wikicode}
     except Exception as e:
         logger.warning(f"关卡出现bug！{e}")
         return {"status": False, "text": pagetext}
-    tiletext = deal_tiles(stageinfo=stageinfo)
-    tokentext = deal_token(stageinfo=stageinfo)
-
-    if tokentext:
-        if "==作战进度奖励==" in wikicode:
-            wikicode = wikicode.replace("==作战进度奖励==", f"{tokentext}\n==作战进度奖励==")
-        elif "==材料掉落==" in wikicode:
-            wikicode = wikicode.replace("==材料掉落==", f"{tokentext}\n==材料掉落==")
-        else:
-            wikicode = wikicode.replace("==注释与链接==", f"{tokentext}\n==注释与链接==")
-    else:
-        pass
-    # --------------------------------------------------
-    if tiletext:
-        wikicode = mwparserfromhell.parse(wikicode)
-        for template in wikicode.filter_templates():
-            if template.name.matches("普通关卡信息") or template.name.matches("剿灭关卡信息"):
-                template.add("特殊地形效果", f"{tiletext}")
-                continue
-        wikicode = str(wikicode)
-    else:
-        pass
-    # FINALLY!
-    if pagetext != wikicode:
-        return {"status": True, "text": wikicode}
-    else:
-        return {"status": True, "text": wikicode}

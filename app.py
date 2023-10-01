@@ -24,8 +24,8 @@ async def root():
 
 
 @app.post("/main")
-async def root(pagetext: str):
-    return await return_text(pagetext=pagetext)
+async def main(jsons: dict):
+    return await return_text(pagetext=jsons["pagetext"])
 
 
 @app.get("/favicon.ico")
