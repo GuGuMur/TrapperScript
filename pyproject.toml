@@ -1,0 +1,20 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "GuGuMur", email = "2221533105@qq.com"},
+]
+dependencies = [
+    "mwbot>=1.0.19",
+    "fastapi>=0.103.2",
+    "mwparserfromhell>=0.6.5",
+    "httpx>=0.25.0",
+    "jinja2>=3.1.2",
+    "loguru>=0.7.2",
+    "uvicorn>=0.23.2",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+

@@ -1,0 +1,25 @@
+name: release
+on:
+  release:
+    types:
+        - published
+  push:
+    branches:
+        - main
+jobs:
+  pypi-publish:
+    name: upload JS to PRTS
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+        id-token: write
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - uses: pdm-project/setup-pdm@v3
+
+      - name: Edit page
+        run: |
+        cd script
+        pdm run python update.py ${{ secrets.PRTS_BOT_TOKEN }}

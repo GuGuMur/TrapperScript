@@ -1,0 +1,14 @@
+{{关卡装置
+|装置名称={$ name $}
+{% if level!=1 %}
+    |装置等级={$ level $}
+{% endif %}
+{% if initialCnt %}
+    |装置可部署数量={$ initialCnt $}
+{% endif %}
+|装置技能={$ skill $}
+{% if skillLevel!=1 %}
+    |技能等级={$ skillLevel $}
+{% endif %}
+|备注=
+}}
