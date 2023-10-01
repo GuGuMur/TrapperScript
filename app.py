@@ -24,8 +24,8 @@ async def root():
 
 
 @app.post("/main")
-async def root(content: str):
-    return await return_text(pagetext=content)
+async def root(pagetext: str):
+    return await return_text(pagetext=pagetext)
 
 
 @app.get("/favicon.ico")
