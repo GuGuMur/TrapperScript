@@ -22,4 +22,4 @@ jobs:
       - name: Edit page
         run: |
         cd script
-        pdm run python update.py ${{ secrets.PRTS_BOT_TOKEN }}
+        pdm run python script/update.py ${{ secrets.PRTS_BOT_TOKEN }}

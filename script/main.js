@@ -8,7 +8,7 @@ async function get_data(content) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postData)
     };
-    await fetch(`https://bot.gudev.online/api/prts/page_trap?title=${encodeURIComponent(title)}`,requestOptions)
+    await fetch(`https://trapper-script.gudev.online/main`,requestOptions)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);

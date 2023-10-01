@@ -1,2 +1,2 @@
 # example-package
-pdm export -o src/requirements.txt
+pdm export -o requirements.txt --without-hashes
