@@ -3,7 +3,6 @@
 
 annotated-types==0.5.0
 anyio==3.7.1
-asyncio==3.4.3
 certifi==2023.7.22
 click==8.1.7
 colorama==0.4.6
