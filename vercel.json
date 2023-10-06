@@ -17,8 +17,8 @@
     ],
     "routes": [
         {
-            "src": "/.*",
-            "dest": "app.py",
+            "source": "/(.*)",
+            "destination": "app.py",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",
@@ -39,12 +39,12 @@
             ]
         },
         {
-            "src": "/docs",
-            "dest": "app.py"
+            "source": "/docs",
+            "destination": "app.py"
         },
         {
-            "src": "/openapi.json",
-            "dest": "app.py"
+            "source": "/openapi.json",
+            "destination": "app.py"
         }
     ]
 }
