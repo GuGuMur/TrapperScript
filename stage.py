@@ -91,9 +91,9 @@ def deal_token(stageinfo: dict) -> str:
     subparams = ["tokenInsts", "tokenCards"]
 
     for maintitle in mainparams:
-        if subdict := maintitle.get(stageinfo, False):
+        if subdict := stageinfo.get(maintitle, False):
             for subtitle in subparams:
-                if nextdict := subtitle.get(subdict, False):
+                if nextdict := subdict.get(subtitle, False):
                     for t in nextdict:
                         cell_trap_info = cell_deal_token(data=t)
                         if traptext.get(cell_trap_info["type"], False):
@@ -132,7 +132,7 @@ def deal_tiles(stageinfo: dict):
             # else:
             #     continue
             else:
-                hint.append(f"没有获取到tile [{i['tileKey']}]的应用！!")
+                hint.append(f"没有获取到tile [{i['tileKey']}]的应用！")
                 continue
     if text_list:
         tiletext = clean_list_and_return_str(text_list)
