@@ -23,7 +23,10 @@ async function get_data() {
     // console.log(pagetext)
     const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "max-age=31536000"
+        },
         body: JSON.stringify({ "pagetext": pagetext })
     };
     await fetch(`https://trapper-script.gudev.online/main`, requestOptions)

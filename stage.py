@@ -1,9 +1,8 @@
-import re, mwparserfromhell
+import mwparserfromhell
 from httpx import AsyncClient
 from mwbot import utils
 from mwbot.arktool_internet import arktool as att
 from jinja2 import Environment
-from loguru import logger
 from pathlib import Path
 
 
