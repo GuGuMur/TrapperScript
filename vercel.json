@@ -1,14 +1,50 @@
 {
-	"version": 2,
-	"public": false,
-	"builds": [
-    { "src": "*.py", "use": "@vercel/python" },
-    { "src": "*.jinja2", "use": "@vercel/static" },
-    { "src": "*.ico", "use": "@vercel/static" }
-  ],
-	"routes": [
-		{ "src": "/.*", "dest": "app.py" },
-		{ "src": "/docs", "dest": "app.py" },
-		{ "src": "/openapi.json", "dest": "app.py" }
-	]
+    "version": 2,
+    "public": false,
+    "builds": [
+        {
+            "src": "*.py",
+            "use": "@vercel/python"
+        },
+        {
+            "src": "*.jinja2",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "*.ico",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/.*",
+            "dest": "app.py",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Credentials",
+                    "value": "false"
+                },
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "*"
+                },
+                {
+                    "key": "Access-Control-Allow-Methods",
+                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+                },
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "*"
+                }
+            ]
+        },
+        {
+            "src": "/docs",
+            "dest": "app.py"
+        },
+        {
+            "src": "/openapi.json",
+            "dest": "app.py"
+        }
+    ]
 }
