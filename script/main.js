@@ -25,9 +25,10 @@ async function get_data() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Cache-Control": "max-age=31536000"
         },
-        body: JSON.stringify({ "pagetext": pagetext })
+        body: JSON.stringify({ "pagetext": pagetext }),
+        referrerPolicy: "no-referrer-when-downgrade",
+        mode: "cors"
     };
     await fetch(`https://trapper-script.gudev.online/main`, requestOptions)
         .then((response) => response.json())
@@ -69,8 +70,7 @@ async function get_data() {
 }
 async function trapper_edit() {
     const title = mw.config.get("wgPageName")
-    let info;
-    info = InPageEdit.quickEdit({
+    InPageEdit.quickEdit({
         page: title,
         revision: mw.config.get("wgRevisionId"),
         editSummary: "$section //Powered by trapper & InPageEdit"
