@@ -206,4 +206,5 @@ async def return_text(pagetext: str):
             return {"status": False, "text": wikicode, "hint": hint}
     except Exception as e:
         hint.append(f"关卡出现bug！{e}")
+        hint = "\n".join(list(set(hint)))
         return {"status": False, "text": pagetext, "hint": hint}
