@@ -97,9 +97,9 @@ def deal_token(stageinfo: dict) -> str:
                     for t in nextdict:
                         cell_trap_info = cell_deal_token(data=t)
                         if traptext.get(cell_trap_info["type"], False):
-                            traptext[type].append(cell_trap_info["text"])
+                            traptext[cell_trap_info["type"]].append(cell_trap_info["text"])
                         else:
-                            traptext[type] = [cell_trap_info["text"]]
+                            traptext[cell_trap_info["type"]] = [cell_trap_info["text"]]
             # for k,v in stageinfo[maintitle].items():
             #     #k=["characterInsts","tokenInsts","characterCards","tokenCards"]
             #     if v:
