@@ -19,7 +19,7 @@ async function get_page_text() {
 }
 
 async function get_data() {
-    var pagetext = await get_page_text()
+    let pagetext = await get_page_text()
     // console.log(pagetext)
     const requestOptions = {
         method: "POST",
@@ -30,12 +30,22 @@ async function get_data() {
     await fetch(`https://trapper-script.gudev.online/main`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            InPageEdit.progress(true);
+            setTimeout(function () {
+                InPageEdit.progress(false);
+            }, 500);
+            let hint = ""
+            if (data.hint) {
+                hint = "可能还需要注意以下内容" + data.hint
+            }
+            else {
+                hint = ""
+            }
             if (data["status"] == true) {
                 ssi_modal.notify('success', {
                     className: 'in-page-edit',
                     title: "获取更新后的内容成功！",
-                    content: "",
+                    content: hint,
                 })
                 $('.editArea').val(data.text)
                 $('#editSummary').val("//Powered by InPageEdit & Trapper Script")
@@ -45,7 +55,7 @@ async function get_data() {
                     ssi_modal.notify('error', {
                         className: 'in-page-edit',
                         title: '该页面似乎不需要Trapper的更新？',
-                        content: "...",
+                        content: hint,
                     });
                 }
             }
@@ -57,7 +67,7 @@ async function get_data() {
                 title: 'Trapper处理出错！',
                 content: e,
             });
-            return { "status": false, "text": "" }
+            return { "status": false, "text": "", "hint": "" }
         })
 }
 async function trapper_edit() {
@@ -69,6 +79,7 @@ async function trapper_edit() {
         editSummary: "$section //Powered by trapper & InPageEdit"
     });
     try {
+        InPageEdit.progress('正在加载Trapper......');
         await get_data();
     } catch (error) {
         console.error('Error:', error);
@@ -81,12 +92,17 @@ mw.hook('InPageEdit.toolbox').add(({ $toolbox }) => {
         .append(
             $('<li>', { class: 'btn-tip-group' }).append(
                 $('<div>', { class: 'btn-tip', text: "Trapper" }),
-                $('<button>', { class: 'ipe-toolbox-btn fa fa-cub ipe-trapper' }).click(trapper_edit)
+                $('<button>',
+                    {
+                        id: "trapper-btn",
+                        class: 'ipe-toolbox-btn fa fa-cube ipe-trapper'
+                    })
+                    .click(trapper_edit)
             )
         );
     mw.util.addCSS(`
-        .ipe-trapper {
-            color: #845EC2;
+        #trapper-btn {
+            background: #845EC2 !important;
         }
     `);
 });

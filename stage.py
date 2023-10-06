@@ -9,6 +9,7 @@ from pathlib import Path
 
 async def read_static_file(name: str):
     domains = [
+        "https://raw.githubusercontent.com",
         "https://raw.kgithub.com/",
         "https://ghproxy.com/https://raw.githubusercontent.com/",
         "https://fastly.jsdelivr.net/gh/",
@@ -38,16 +39,20 @@ def clean_text(text: str):
     return result
 
 
-def return_skill_name(skillId: str):
+def return_skill_name(skillId: str) -> str:
     return skill_table[skillId]["levels"][0]["name"]
+
 
 def get_char_name(id: str) -> str:
     return character_table[id]["name"]
 
-def cell_deal_token(data: dict):
+
+def cell_deal_token(data: dict) -> dict:
     charinfo = character_table[data["inst"]["characterKey"]]
     result = {}
     result["name"] = get_char_name(data["inst"]["characterKey"])
+
+    # 能从json中直接获取的内容
     if data["inst"]["level"]:
         result["level"] = data["inst"]["level"]
     if data.get("initialCnt"):
@@ -57,34 +62,53 @@ def cell_deal_token(data: dict):
         result["skill"] = return_skill_name(charskillid_local)
     if data.get("mainSkillLvl"):
         result["skillLevel"] = data["mainSkillLvl"]
-    return TEMPLATES.render(T_NAME="trapper.jinja2", **result)
+    # 需要与static内容联动的内容
+    # 处理一下装置到底用不用
+    if result["name"] in unwritetraps:
+        return {
+            "type": "不需要写入页面的装置",
+            "text": clean_text(TEMPLATES.render(T_NAME="trapper.jinja2", **result)),
+        }
+    else:
+        if trapsformat.get(result["name"], False):
+            trap_s_format = trapsformat[result["name"]]
+            traptype = trap_s_format["type"]
+            addition_text = [f"{k}={v}" for k, v in trap_s_format["params"].items()]
+            result["addition"] = "\n".join(addition_text)
+        else:
+            traptype = "未分类装置"
+            result["addition"] = ""
+        return {
+            "type": traptype,
+            "text": clean_text(TEMPLATES.render(T_NAME="trapper.jinja2", **result)),
+        }
 
 
 def deal_token(stageinfo: dict) -> str:
-    traptext = []
+    traptext: [str, list[str]] = {}
+    result_text: str = ""
     mainparams = ["predefines", "hardPredefines"]
     subparams = ["tokenInsts", "tokenCards"]
 
-    def return_dict_if_exist(key, dic):
-        if key in dic:
-            return dic[key]
-        else:
-            return False
-
     for maintitle in mainparams:
-        if subdict := return_dict_if_exist(maintitle, stageinfo):
+        if subdict := maintitle.get(stageinfo, False):
             for subtitle in subparams:
-                if nextdict := return_dict_if_exist(subtitle, subdict):
+                if nextdict := subtitle.get(subdict, False):
                     for t in nextdict:
-                        traptext.append(f"{cell_deal_token(data=t)}")
-
+                        cell_trap_info = cell_deal_token(data=t)
+                        if traptext.get(cell_trap_info["type"], False):
+                            traptext[type].append(cell_trap_info["text"])
+                        else:
+                            traptext[type] = [cell_trap_info["text"]]
             # for k,v in stageinfo[maintitle].items():
             #     #k=["characterInsts","tokenInsts","characterCards","tokenCards"]
             #     if v:
             #         for t in v:
     if traptext:
-        traptext = "==未分类装置==\n" + "\n".join(list(set(traptext)))
-        return clean_text(traptext)
+        for k, v in traptext.items():
+            result_text += f"=={k}==\n" + "\n".join(list(set(v)))
+            result_text += "\n"
+        return clean_text(result_text)
     else:
         return ""
 
@@ -108,7 +132,7 @@ def deal_tiles(stageinfo: dict):
             # else:
             #     continue
             else:
-                logger.warning(f"{i['tileKey']} NOT FOUND USAGE!")
+                hint.append(f"没有获取到tile [{i['tileKey']}]的应用！!")
                 continue
     if text_list:
         tiletext = clean_list_and_return_str(text_list)
@@ -121,8 +145,8 @@ deal_key = lambda key: key.replace("[", "__").replace("]", "__").replace(".", "_
 
 
 async def return_text(pagetext: str):
-    global unwritetiles, tilesformat, character_table
-    global skill_table, env, TEMPLATES, new_tiles_table, arktool
+    global unwritetiles, tilesformat, character_table, trapsformat, unwritetraps
+    global skill_table, env, TEMPLATES, new_tiles_table, arktool, hint
     arktool = att(
         domains=[
             "https://raw.githubusercontent.com",
@@ -145,7 +169,10 @@ async def return_text(pagetext: str):
     )
     new_tiles_table = {}
     unwritetiles = await read_static_file("unwritetiles.json")
+    unwritetraps = await read_static_file("unwritetraps.json")
     tilesformat = await read_static_file("tilesformat.json")
+    trapsformat = await read_static_file("trapsformat.json")
+    hint = []
     wikicode = pagetext[:]
     try:
         stageinfo = await arktool.get_stage_info(pagetext)
@@ -172,10 +199,11 @@ async def return_text(pagetext: str):
         else:
             pass
         # FINALLY!
+        hint = "\n".join(list(set(hint)))
         if pagetext != wikicode:
-            return {"status": True, "text": wikicode}
+            print({"status": True, "text": wikicode, "hint": hint})
         else:
-            return {"status": False, "text": wikicode}
+            return {"status": False, "text": wikicode, "hint": hint}
     except Exception as e:
-        logger.warning(f"关卡出现bug！{e}")
-        return {"status": False, "text": pagetext}
+        hint.append(f"关卡出现bug！{e}")
+        return {"status": False, "text": pagetext, "hint": hint}

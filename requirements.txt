@@ -4,7 +4,6 @@
 anyio==3.7.1
 certifi==2023.7.22
 click==8.1.7
-colorama==0.4.6
 fastapi==0.95.2
 h11==0.14.0
 httpcore==0.18.0
@@ -14,7 +13,7 @@ idna==3.4
 jinja2==3.1.2
 loguru==0.7.2
 MarkupSafe==2.1.3
-mwbot==1.0.21
+mwbot==1.0.22
 mwparserfromhell==0.6.5
 pendulum==2.1.2
 pydantic==1.10.13
@@ -29,7 +28,7 @@ starlette==0.27.0
 typing-extensions==4.8.0
 ujson==5.8.0
 uvicorn==0.22.0
+uvloop==0.17.0
 watchfiles==0.20.0
 websockets==11.0.3
-win32-setctime==1.1.0
 xmltodict==0.13.0
