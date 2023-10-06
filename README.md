@@ -6,3 +6,8 @@
 ```javascript
 mw.loader.load('/index.php?title=User:GuBot/trapper.js&action=raw&ctype=text/javascript');
 ```
+
+## 导出requirements
+```
+pdm export -o requirements.txt --without-hashes
+```
