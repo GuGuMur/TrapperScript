@@ -1,50 +1,50 @@
 {
-    "version": 2,
-    "public": false,
-    "builds": [
+    "version":2,
+    "public":false,
+    "builds":[
         {
-            "src": "*.py",
-            "use": "@vercel/python"
+            "src":"*.py",
+            "use":"@vercel/python"
         },
         {
-            "src": "*.jinja2",
-            "use": "@vercel/static"
+            "src":"*.jinja2",
+            "use":"@vercel/static"
         },
         {
-            "src": "*.ico",
-            "use": "@vercel/static"
+            "src":"*.ico",
+            "use":"@vercel/static"
         }
     ],
-    "routes": [
+    "routes":[
         {
-            "source": "/(.*)",
-            "destination": "app.py",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "false"
-                },
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
-                },
-                {
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-                },
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "*"
-                }
-            ]
+            "src":"/(.*)",
+            "dest":"app.py"
         },
         {
-            "source": "/docs",
-            "destination": "app.py"
+            "src":"/docs",
+            "dest":"app.py"
         },
         {
-            "source": "/openapi.json",
-            "destination": "app.py"
+            "src":"/openapi.json",
+            "dest":"app.py"
+        }
+    ],
+    "headers":[
+        {
+            "key":"Access-Control-Allow-Credentials",
+            "value":"false"
+        },
+        {
+            "key":"Access-Control-Allow-Origin",
+            "value":"*"
+        },
+        {
+            "key":"Access-Control-Allow-Methods",
+            "value":"GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        },
+        {
+            "key":"Access-Control-Allow-Headers",
+            "value":"*"
         }
     ]
 }
