@@ -73,7 +73,7 @@ def cell_deal_token(data: dict) -> dict:
         if trapsformat.get(result["name"], False):
             trap_s_format = trapsformat[result["name"]]
             traptype = trap_s_format["type"]
-            addition_text = [f"{i['param']}={i['content']}" for i in trap_s_format["params"]]
+            addition_text = [f"|{i['param']}={i['content']}" for i in trap_s_format["params"]]
             result["addition"] = "\n".join(addition_text)
         else:
             traptype = "未分类装置"

@@ -26,26 +26,17 @@ async function get_data() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ "pagetext": pagetext })
     };
-    console.log(requestOptions)
     await fetch(`https://trapper-script.gudev.online/main`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
+            console.log(data)
             InPageEdit.progress(true);
-            setTimeout(function () {
-                InPageEdit.progress(false);
-            }, 500);
-            let hint = ""
-            if (data.hint) {
-                hint = "可能还需要注意以下内容" + data.hint
-            }
-            else {
-                hint = ""
-            }
+            setTimeout(()=>{ InPageEdit.progress(false) }, 500);
             if (data["status"] == true) {
                 ssi_modal.notify('success', {
                     className: 'in-page-edit',
                     title: "获取更新后的内容成功！",
-                    content: hint,
+                    content: data.hint,
                 })
                 $('.editArea').val(data.text)
                 $('#editSummary').val("//Powered by InPageEdit & Trapper Script")
@@ -55,19 +46,22 @@ async function get_data() {
                     ssi_modal.notify('error', {
                         className: 'in-page-edit',
                         title: '该页面似乎不需要Trapper的更新？',
-                        content: hint,
+                        content: data.hint,
                     });
                 }
             }
         })
         .catch(e => {
+            InPageEdit.progress(true);
+            setTimeout(function () {
+                InPageEdit.progress(false);
+            }, 500);
             console.error('Error:', e);
             ssi_modal.notify('error', {
                 className: 'in-page-edit',
                 title: 'Trapper处理出错！',
                 content: e,
             });
-            return { "status": false, "text": "", "hint": "" }
         })
 }
 async function trapper_edit() {
