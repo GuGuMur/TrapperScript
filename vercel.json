@@ -15,23 +15,10 @@
             "use":"@vercel/static"
         }
     ],
-    "routes":[
-        {
-            "src":"/(.*)",
-            "dest":"app.py"
-        },
-        {
-            "src":"/docs",
-            "dest":"app.py"
-        },
-        {
-            "src":"/openapi.json",
-            "dest":"app.py"
-        }
-    ],
     "headers":[
         {
-            "source":"/api/(.*)",
+            "source":"/(.*)",
+            "destination":"app.py",
             "headers":[
                 {
                     "key":"Access-Control-Allow-Credentials",
