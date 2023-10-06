@@ -1,0 +1,11 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_install_hook_types: [pre-commit, prepare-commit-msg]
+repos:
+-   repo: local
+    hooks:
+    -   id: export-requirements
+        name: export requirements files
+        language: system
+        entry: pdm export -o requirements.txt --without-hashes
+        files: ^requirements.*\.txt$
