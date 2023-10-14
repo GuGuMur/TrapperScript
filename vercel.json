@@ -1,38 +1,38 @@
 {
-    "version":2,
-    "public":false,
-    "builds":[
+    "version": 2,
+    "public": false,
+    "builds": [
         {
-            "src":"*.py",
-            "use":"@vercel/python"
+            "src": "*.py",
+            "use": "@vercel/python"
         },
         {
-            "src":"*.jinja2",
-            "use":"@vercel/static"
+            "src": "*.jinja2",
+            "use": "@vercel/static"
         },
         {
-            "src":"*.ico",
-            "use":"@vercel/static"
+            "src": "*.ico",
+            "use": "@vercel/static"
         }
     ],
-    "routes":[
+    "routes": [
         {
-            "src":"/.*",
-            "dest":"app.py",
-            "headers":{
-                "Access-Control-Allow-Credentials":"false",
-                "Access-Control-Allow-Origin":"*",
-                "Access-Control-Allow-Methods":"GET,OPTIONS,PATCH,DELETE,POST,PUT",
-                "Access-Control-Allow-Headers":"*"
+            "src": "/.*",
+            "dest": "app.py",
+            "headers": {
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Origin": ["https://prts.wiki"],
+                "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+                "Access-Control-Allow-Headers": "*"
             }
         },
         {
-            "src":"/docs",
-            "dest":"app.py"
+            "src": "/docs",
+            "dest": "app.py"
         },
         {
-            "src":"/openapi.json",
-            "dest":"app.py"
+            "src": "/openapi.json",
+            "dest": "app.py"
         }
     ]
 }
