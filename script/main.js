@@ -20,14 +20,16 @@ async function get_page_text() {
 
 async function get_data() {
     let pagetext = await get_page_text()
+    let formData = new FormData();
+    formData.append("pagetext", pagetext)
     // console.log(pagetext)
     const requestOptions = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json; charset=utf-8",
+            "Content-Type": "multipart/form-data; charset=utf-8",
             "Access-Control-Allow-Origin": "*"
         },
-        body: JSON.stringify({ "pagetext": pagetext }),
+        body: formData,
         referrerPolicy: "no-referrer-when-downgrade",
         mode: "cors"
     };

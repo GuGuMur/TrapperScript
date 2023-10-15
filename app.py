@@ -1,14 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
-import uvicorn
-
-# from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from stage import return_text
 
 app = FastAPI()
 
-origins = ["https://prts.wiki"]
+origins = [
+    "https://prts.wiki"
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -26,7 +25,7 @@ async def root():
 
 
 @app.post("/main")
-async def main(pagetext: str):
+async def main(pagetext: str = Form()):
     return await return_text(pagetext=pagetext)
 
 
@@ -36,4 +35,5 @@ async def favicon():
 
 
 # if __name__ == "__main__":
+#     import uvicorn
 #     uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)

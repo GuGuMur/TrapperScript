@@ -20,6 +20,7 @@ async def main(password:str):
         print("PASS")
     else:
         await bot.edit_page(title="User:GuBot/trapper.js",text=js,summary="//Edit by GithubActionBot.")
+        await bot.purge(title="User:GuBot/trapper.js")
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='update js')
     parser.add_argument('password')
