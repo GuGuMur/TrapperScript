@@ -24,7 +24,8 @@ async function get_data() {
     const requestOptions = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
+            "Access-Control-Allow-Origin": "*"
         },
         body: JSON.stringify({ "pagetext": pagetext }),
         referrerPolicy: "no-referrer-when-downgrade",
@@ -35,7 +36,7 @@ async function get_data() {
         .then((data) => {
             console.log(data)
             InPageEdit.progress(true);
-            setTimeout(()=>{ InPageEdit.progress(false) }, 500);
+            setTimeout(() => { InPageEdit.progress(false) }, 500);
             if (data["status"] == true) {
                 ssi_modal.notify('success', {
                     className: 'in-page-edit',

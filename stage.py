@@ -131,7 +131,7 @@ def deal_tiles(stageinfo: dict):
             # else:
             #     continue
             else:
-                hint.append(f"没有获取到tile [{i['tileKey']}]的应用！")
+                hint.append(f"没有获取到tile [{i['tileKey']}]的应用！<br/>")
                 continue
     if text_list:
         tiletext = clean_list_and_return_str(text_list)
@@ -204,6 +204,6 @@ async def return_text(pagetext: str):
         else:
             return {"status": False, "text": wikicode, "hint": hint}
     except Exception as e:
-        hint.append(f"关卡出现bug！{e}")
+        hint.append(f"关卡出现bug！<br/>{e}")
         hint = "\n".join(list(set(hint)))
         return {"status": False, "text": pagetext, "hint": hint}

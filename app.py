@@ -8,9 +8,7 @@ from stage import return_text
 
 app = FastAPI()
 
-origins = [
-    "https://prts.wiki"
-]
+origins = ["https://prts.wiki"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,8 +26,8 @@ async def root():
 
 
 @app.post("/main")
-async def main(jsons: dict):
-    return await return_text(pagetext=jsons["pagetext"])
+async def main(pagetext: str):
+    return await return_text(pagetext=pagetext)
 
 
 @app.get("/favicon.ico")
