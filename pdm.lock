@@ -220,7 +220,7 @@ files = [
 
 [[package]]
 name = "mwbot"
-version = "1.0.22"
+version = "1.0.24"
 requires_python = ">=3.9,<4.0"
 summary = "个性化封装的Python Mediawiki API库"
 dependencies = [
@@ -228,14 +228,13 @@ dependencies = [
     "httpx>=0.23.3",
     "loguru>=0.6.0",
     "mwparserfromhell>=0.6.4",
-    "pendulum>=2.1.2",
     "regex>=2022.10.31",
     "ujson>=5.7.0",
     "xmltodict>=0.13.0",
 ]
 files = [
-    {file = "mwbot-1.0.22-py3-none-any.whl", hash = "sha256:d8eb8bef4972c00c9a8595a1325d21e30e3e71478549c46f98bb455fd6205d22"},
-    {file = "mwbot-1.0.22.tar.gz", hash = "sha256:d1073ba1e743e3ccea0eb448310976b76761f55695b5fffd8139158917354f4c"},
+    {file = "mwbot-1.0.24-py3-none-any.whl", hash = "sha256:5072753c0540de663d41c1a42cecd799d2e3c0935cb4844bfa639a6c4d3841af"},
+    {file = "mwbot-1.0.24.tar.gz", hash = "sha256:e5df1a58d2635cf876e9c772464c897114637558b8a1a44dd8813bd403254f2f"},
 ]
 
 [[package]]
@@ -260,19 +259,6 @@ files = [
     {file = "mwparserfromhell-0.6.5-cp39-cp39-win32.whl", hash = "sha256:7f6e5505014d0e97e29bc01304e8f6a8d782dec55c53492cc7ca03d2a6d1e445"},
     {file = "mwparserfromhell-0.6.5-cp39-cp39-win_amd64.whl", hash = "sha256:153243177c4c242880e9c4547880e834f01d04625ad0bc175693255dfb22dae5"},
     {file = "mwparserfromhell-0.6.5.tar.gz", hash = "sha256:2bad0bff614576399e4470d6400ba29c52d595682a4b8de642afbb5bebf4a346"},
-]
-
-[[package]]
-name = "pendulum"
-version = "2.1.2"
-requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-summary = "Python datetimes made easy"
-dependencies = [
-    "python-dateutil<3.0,>=2.6",
-    "pytzdata>=2020.1",
-]
-files = [
-    {file = "pendulum-2.1.2.tar.gz", hash = "sha256:b06a0ca1bfe41c990bbf0c029f0b6501a7f2ec4e38bfec730712015e8860f207"},
 ]
 
 [[package]]
@@ -310,19 +296,6 @@ files = [
 ]
 
 [[package]]
-name = "python-dateutil"
-version = "2.8.2"
-requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
-summary = "Extensions to the standard Python datetime module"
-dependencies = [
-    "six>=1.5",
-]
-files = [
-    {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
-    {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
-]
-
-[[package]]
 name = "python-dotenv"
 version = "1.0.0"
 requires_python = ">=3.8"
@@ -340,16 +313,6 @@ summary = "A streaming multipart parser for Python"
 files = [
     {file = "python_multipart-0.0.6-py3-none-any.whl", hash = "sha256:ee698bab5ef148b0a760751c261902cd096e57e10558e11aca17646b74ee1c18"},
     {file = "python_multipart-0.0.6.tar.gz", hash = "sha256:e9925a80bb668529f1b67c7fdb0a5dacdd7cbfc6fb0bff3ea443fe22bdd62132"},
-]
-
-[[package]]
-name = "pytzdata"
-version = "2020.1"
-requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-summary = "The Olson timezone database for Python."
-files = [
-    {file = "pytzdata-2020.1-py2.py3-none-any.whl", hash = "sha256:e1e14750bcf95016381e4d472bad004eef710f2d6417240904070b3d6654485f"},
-    {file = "pytzdata-2020.1.tar.gz", hash = "sha256:3efa13b335a00a8de1d345ae41ec78dd11c9f8807f522d39850f2dd828681540"},
 ]
 
 [[package]]
@@ -412,16 +375,6 @@ files = [
     {file = "regex-2023.8.8-cp311-cp311-win32.whl", hash = "sha256:942f8b1f3b223638b02df7df79140646c03938d488fbfb771824f3d05fc083a8"},
     {file = "regex-2023.8.8-cp311-cp311-win_amd64.whl", hash = "sha256:51d8ea2a3a1a8fe4f67de21b8b93757005213e8ac3917567872f2865185fa7fb"},
     {file = "regex-2023.8.8.tar.gz", hash = "sha256:fcbdc5f2b0f1cd0f6a56cdb46fe41d2cce1e644e3b68832f3eeebc5fb0f7712e"},
-]
-
-[[package]]
-name = "six"
-version = "1.16.0"
-requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
-summary = "Python 2 and 3 compatibility utilities"
-files = [
-    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
-    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
 
 [[package]]

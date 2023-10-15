@@ -25,10 +25,6 @@ async function get_data() {
     // console.log(pagetext)
     const requestOptions = {
         method: "POST",
-        headers: {
-            "Content-Type": "multipart/form-data; charset=utf-8",
-            "Access-Control-Allow-Origin": "*"
-        },
         body: formData,
         referrerPolicy: "no-referrer-when-downgrade",
         mode: "cors"

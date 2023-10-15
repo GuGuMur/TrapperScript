@@ -8,7 +8,7 @@ from pathlib import Path
 
 async def read_static_file(name: str):
     domains = [
-        "https://raw.githubusercontent.com",
+        "https://raw.githubusercontent.com/",
         "https://raw.kgithub.com/",
         "https://ghproxy.com/https://raw.githubusercontent.com/",
         "https://fastly.jsdelivr.net/gh/",
@@ -146,18 +146,7 @@ deal_key = lambda key: key.replace("[", "__").replace("]", "__").replace(".", "_
 async def return_text(pagetext: str):
     global unwritetiles, tilesformat, character_table, trapsformat, unwritetraps
     global skill_table, env, TEMPLATES, new_tiles_table, arktool, hint
-    arktool = att(
-        domains=[
-            "https://raw.githubusercontent.com",
-            "https://raw.kgithub.com/",
-            "https://ghproxy.com/https://raw.githubusercontent.com/",
-            "https://fastly.jsdelivr.net/gh/",
-            "https://cdn.staticaly.com/gh/",
-            "https://ghproxy.net/https://raw.githubusercontent.com/",
-            "https://gcore.jsdelivr.net/gh/",
-            "https://jsdelivr.b-cdn.net/gh/",
-        ]
-    )
+    arktool = att()
     character_table = await arktool.read_ark_file("excel/character_table.json")
     skill_table = await arktool.read_ark_file("excel/skill_table.json")
     env = Environment(variable_start_string="{$", variable_end_string="$}")
@@ -174,7 +163,7 @@ async def return_text(pagetext: str):
     hint = []
     wikicode = pagetext[:]
     try:
-        stageinfo = await arktool.get_stage_info(pagetext)
+        stageinfo = await arktool.get_stage_info(content=pagetext)
         tiletext = deal_tiles(stageinfo=stageinfo)
         tokentext = deal_token(stageinfo=stageinfo)
 
@@ -199,11 +188,14 @@ async def return_text(pagetext: str):
             pass
         # FINALLY!
         hint = "\n".join(list(set(hint)))
+        traceback.print_exc()
         if pagetext != wikicode:
-            print({"status": True, "text": wikicode, "hint": hint})
+            return {"status": True, "text": wikicode, "hint": hint}
         else:
             return {"status": False, "text": wikicode, "hint": hint}
     except Exception as e:
+        import traceback
         hint.append(f"关卡出现bug！<br/>{e}")
         hint = "\n".join(list(set(hint)))
+        traceback.print_exc()
         return {"status": False, "text": pagetext, "hint": hint}
