@@ -6,25 +6,10 @@ from jinja2 import Environment
 from pathlib import Path
 
 
-async def read_static_file(name: str):
-    domains = [
-        "https://raw.githubusercontent.com/",
-        "https://raw.kgithub.com/",
-        "https://ghproxy.com/https://raw.githubusercontent.com/",
-        "https://fastly.jsdelivr.net/gh/",
-        "https://cdn.staticaly.com/gh/",
-        "https://ghproxy.net/https://raw.githubusercontent.com/",
-        "https://gcore.jsdelivr.net/gh/",
-        "https://jsdelivr.b-cdn.net/gh/",
-    ]
-
+async def read_prts_static_json(name: str):
     async with AsyncClient() as client:
-        for i in domains:
-            try:
-                res = await client.get(f"{i}GuGuMur/GuBot-PRTS-static/main/{name}")
-                return res.json()
-            except:
-                pass
+        res = await client.get(f"https://prts.wiki/index.php?title={name}&action=raw&ctype=application/json")
+        return res.json()
 
 
 def clean_list_and_return_str(li: list) -> str:
@@ -156,10 +141,10 @@ async def return_text(pagetext: str):
         variable_end_string="$}",
     )
     new_tiles_table = {}
-    unwritetiles = await read_static_file("unwritetiles.json")
-    unwritetraps = await read_static_file("unwritetraps.json")
-    tilesformat = await read_static_file("tilesformat.json")
-    trapsformat = await read_static_file("trapsformat.json")
+    unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
+    unwritetraps = await read_prts_static_json("模板:关卡装置/trapper/unwritetraps.json")
+    tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
+    trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
     hint = []
     wikicode = pagetext[:]
     try:
