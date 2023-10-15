@@ -72,7 +72,7 @@ def cell_deal_token(data: dict) -> dict:
         if trapsformat.get(result["name"], False):
             trap_s_format = trapsformat[result["name"]]
             traptype = trap_s_format["type"]
-            addition_text = [f"|{i['param']}={i['content']}" for i in trap_s_format["params"]]
+            addition_text = [f"|{k}={v}" for k,v in trap_s_format["params"].items()]
             result["addition"] = "\n".join(addition_text)
         else:
             traptype = "未分类装置"
@@ -188,14 +188,13 @@ async def return_text(pagetext: str):
             pass
         # FINALLY!
         hint = "\n".join(list(set(hint)))
-        traceback.print_exc()
         if pagetext != wikicode:
             return {"status": True, "text": wikicode, "hint": hint}
         else:
             return {"status": False, "text": wikicode, "hint": hint}
     except Exception as e:
         import traceback
+        traceback.print_exc()
         hint.append(f"关卡出现bug！<br/>{e}")
         hint = "\n".join(list(set(hint)))
-        traceback.print_exc()
         return {"status": False, "text": pagetext, "hint": hint}
