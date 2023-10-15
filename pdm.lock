@@ -220,7 +220,7 @@ files = [
 
 [[package]]
 name = "mwbot"
-version = "1.0.24"
+version = "1.0.25"
 requires_python = ">=3.9,<4.0"
 summary = "个性化封装的Python Mediawiki API库"
 dependencies = [
@@ -233,8 +233,8 @@ dependencies = [
     "xmltodict>=0.13.0",
 ]
 files = [
-    {file = "mwbot-1.0.24-py3-none-any.whl", hash = "sha256:5072753c0540de663d41c1a42cecd799d2e3c0935cb4844bfa639a6c4d3841af"},
-    {file = "mwbot-1.0.24.tar.gz", hash = "sha256:e5df1a58d2635cf876e9c772464c897114637558b8a1a44dd8813bd403254f2f"},
+    {file = "mwbot-1.0.25-py3-none-any.whl", hash = "sha256:c98524c95f97d63923464921e43e8bfb90901f2dfc93d00f01a33ff2a9b29275"},
+    {file = "mwbot-1.0.25.tar.gz", hash = "sha256:117fe85d7eb9b4390e527758fb254dc212edac496cdf1284f40726f72b59dd17"},
 ]
 
 [[package]]
