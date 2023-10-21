@@ -132,6 +132,13 @@ async def return_text(pagetext: str):
     global unwritetiles, tilesformat, character_table, trapsformat, unwritetraps
     global skill_table, env, TEMPLATES, new_tiles_table, arktool, hint
     arktool = att()
+    # 首先处理stage
+    stage_id = arktool.get_stage_id(content=pagetext)
+    if stage_id:
+        ... # continue
+    else:
+        return {"status": False, "text": wikicode, "hint": ""}
+    # 然后再开始获取数据
     character_table = await arktool.read_ark_file("excel/character_table.json")
     skill_table = await arktool.read_ark_file("excel/skill_table.json")
     env = Environment(variable_start_string="{$", variable_end_string="$}")
