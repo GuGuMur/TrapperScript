@@ -28,7 +28,7 @@ def return_skill_name(skillId: str) -> str:
 
 
 def get_char_name(id: str) -> str:
-    return character_table[id]["name"]
+    return character_table[id]["name"].strip()
 
 
 def cell_deal_token(data: dict) -> dict:
@@ -54,8 +54,9 @@ def cell_deal_token(data: dict) -> dict:
             "text": clean_text(TEMPLATES.render(T_NAME="trapper.jinja2", **result)),
         }
     else:
-        if trapsformat.get(result["name"], False):
-            trap_s_format = trapsformat[result["name"]]
+        if result["name"] in trapsformat.keys():
+            trap_s_format = trapsformat[str(result["name"])]
+            print(trap_s_format)
             traptype = trap_s_format["type"]
             addition_text = [f"|{k}={v}" for k,v in trap_s_format["params"].items()]
             result["addition"] = "\n".join(addition_text)
@@ -149,8 +150,8 @@ async def return_text(pagetext: str):
     )
     new_tiles_table = {}
     unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
-    unwritetraps = await read_prts_static_json("模板:关卡装置/trapper/unwritetraps.json")
     tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
+    unwritetraps = await read_prts_static_json("模板:关卡装置/trapper/unwritetraps.json")
     trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
     hint = []
     wikicode = pagetext[:]

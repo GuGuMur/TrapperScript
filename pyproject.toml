@@ -1,12 +1,12 @@
 [project]
-name = ""
-version = ""
+name = "trapper-script"
+version = "0.3.0"
 description = ""
 authors = [
     {name = "GuGuMur", email = "2221533105@qq.com"},
 ]
 dependencies = [
-    "mwbot>=1.0.21",
+    "mwbot>=1.0.27",
     "fastapi==0.95.2",
     "mwparserfromhell>=0.6.5",
     "httpx>=0.25.0",
