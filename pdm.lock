@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform"]
 lock_version = "4.4"
-content_hash = "sha256:2f22bd08d2c674f728b5253d42c05355ca30927a863d516160ad73013aa635d4"
+content_hash = "sha256:0b0e869967fae1467fb7599bb8d1af1c1cbacdbf5dc594d9aba7bef3492f02fd"
 
 [[package]]
 name = "anyio"
@@ -178,14 +178,6 @@ dependencies = [
 files = [
     {file = "Jinja2-3.1.2-py3-none-any.whl", hash = "sha256:6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61"},
     {file = "Jinja2-3.1.2.tar.gz", hash = "sha256:31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"},
-]
-
-[[package]]
-name = "jsmin"
-version = "3.0.1"
-summary = "JavaScript minifier."
-files = [
-    {file = "jsmin-3.0.1.tar.gz", hash = "sha256:c0959a121ef94542e807a674142606f7e90214a2b3d1eb17300244bbb5cc2bfc"},
 ]
 
 [[package]]
