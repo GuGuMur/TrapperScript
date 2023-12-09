@@ -20,6 +20,6 @@ jobs:
         uses: pdm-project/setup-pdm@v3
       # You are now able to use PDM in your workflow
       - name: Install dependencies
-        run: pdm run pip install mwbot jsmin
+        run: pdm install
       - name: Edit page
         run: pdm run python script/update.py ${{ secrets.PRTS_BOT_TOKEN }}
