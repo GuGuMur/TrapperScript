@@ -1,9 +1,8 @@
 import mwparserfromhell
-from mwbot import utils
-from mwbot.arktool_internet import arktool as att
-from jinja2 import Environment
-from pathlib import Path
-from stage.utils import *
+from mwbot import arktool
+from .utils import *
+
+arktool.GameDataPosition = "E:/ArknightsGameData/zh_CN/gamedata"
 
 
 def cell_deal_token(data: dict) -> dict:
@@ -18,22 +17,36 @@ def cell_deal_token(data: dict) -> dict:
         result["装置可部署数量"] = data["initialCnt"]
     if data.get("skillIndex") != None and data["skillIndex"] != -1:
         charskillid_local = charinfo["skills"][data["skillIndex"]]["skillId"]
-        result["装置技能"] = return_skill_name(charskillid_local)
+        result["装置技能"] = return_skill_name(skill_table, charskillid_local)
     if data.get("mainSkillLvl"):
         result["技能等级"] = data["mainSkillLvl"]
+    result.update(data)
     # 需要与static内容联动的内容
     # 处理一下装置到底用不用
-    if result["name"] in unwritetraps:
+    if result["装置名称"] in unwritetraps:
+        result.update(data)
         return {
             "type": "不需要写入页面的装置",
             "text": clean_text(TEMPLATES.render(T_NAME="trapper.jinja2", **result)),
         }
     else:
-        if result["name"] in trapsformat.keys():
-            trap_s_format = trapsformat[str(result["name"])]
-            print(trap_s_format)
-            traptype = trap_s_format["type"]
-            addition_text = [f"|{k}={v}" for k,v in trap_s_format["params"].items()]
+        if result["装置名称"] in trapsformat.keys():
+            trap_cell_format = trapsformat[str(result["装置名称"])]
+            print(trap_cell_format)
+            traptype = trap_cell_format["type"]
+            for k, v in trap_cell_format["params"].items():
+                if isinstance(v, list):
+                    v_d = "\n".join(v)  # value_dealt
+                    trap_cell_format["params"][k] = rend_text_from_text(
+                        ORIGINALTPLT=v_d, **result
+                    )
+
+                else:
+                    trap_cell_format["params"][k] = rend_text_from_text(
+                        ORIGINALTPLT=v, **result
+                    )
+
+            addition_text = [f"|{k}={v.strip()}" for k, v in trap_cell_format["params"].items()]
             result["附加文本"] = "\n".join(addition_text)
         else:
             traptype = "未分类装置"
@@ -57,7 +70,9 @@ def deal_token(stageinfo: dict) -> str:
                     for t in nextdict:
                         cell_trap_info = cell_deal_token(data=t)
                         if traptext.get(cell_trap_info["type"], False):
-                            traptext[cell_trap_info["type"]].append(cell_trap_info["text"])
+                            traptext[cell_trap_info["type"]].append(
+                                cell_trap_info["text"]
+                            )
                         else:
                             traptext[cell_trap_info["type"]] = [cell_trap_info["text"]]
             # for k,v in stageinfo[maintitle].items():
@@ -104,22 +119,16 @@ def deal_tiles(stageinfo: dict):
 async def return_text(pagetext: str):
     global unwritetiles, tilesformat, character_table, trapsformat, unwritetraps
     global skill_table, env, TEMPLATES, new_tiles_table, arktool, hint, char
-    arktool = att()
     # 首先处理stage
     stage_id = arktool.get_stage_id(content=pagetext)
     if stage_id:
-        ... # continue
+        ...  # continue
     else:
         return {"status": False, "text": wikicode, "hint": ""}
     # 然后再开始获取数据
-    character_table = await arktool.read_ark_file("excel/character_table.json")
-    skill_table = await arktool.read_ark_file("excel/skill_table.json")
-    env = Environment(variable_start_string="{$", variable_end_string="$}")
-    TEMPLATES = utils.templates_env(
-        DIR_PATH=str(Path(__file__).parent / "templates"),
-        variable_start_string="{$",
-        variable_end_string="$}",
-    )
+    char = arktool.char()
+    character_table = arktool.read_ark_file("excel/character_table.json")
+    skill_table = arktool.read_ark_file("excel/skill_table.json")
     new_tiles_table = {}
     unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
     tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
@@ -128,7 +137,7 @@ async def return_text(pagetext: str):
     hint = []
     wikicode = pagetext[:]
     try:
-        stageinfo = await arktool.get_stage_info(content=pagetext)
+        stageinfo = arktool.get_stage_info(content=pagetext)
         tiletext = deal_tiles(stageinfo=stageinfo)
         tokentext = deal_token(stageinfo=stageinfo)
 
@@ -159,6 +168,7 @@ async def return_text(pagetext: str):
             return {"status": False, "text": wikicode, "hint": hint}
     except Exception as e:
         import traceback
+
         traceback.print_exc()
         hint.append(f"关卡出现bug！<br/>{e}")
         hint = "\n".join(list(set(hint)))

@@ -30,28 +30,43 @@ async function get_data() {
         mode: "cors"
     };
     await fetch(`https://trapper-script.gudev.online/main`, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
+        .then(response => {
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                return response.text();
+            }
+        }).then((data) => {
             InPageEdit.progress(true);
             setTimeout(() => { InPageEdit.progress(false) }, 500);
-            if (data["status"] == true) {
-                ssi_modal.notify('success', {
-                    className: 'in-page-edit',
-                    title: "获取更新后的内容成功！",
-                    content: data.hint,
-                })
-                $('.editArea').val(data.text)
-                $('#editSummary').val("//Powered by InPageEdit & Trapper Script")
+            if (typeof data === 'object') {
+                console.log(data)
+                if (data["status"] == true) {
+                    ssi_modal.notify('success', {
+                        className: 'in-page-edit',
+                        title: "获取更新后的内容成功！",
+                        content: data.hint,
+                    })
+                    $('.editArea').val(data.text)
+                    $('#editSummary').val("//Powered by InPageEdit & Trapper Script")
+                }
+                else {
+                    if (data["text"] != "") {
+                        ssi_modal.notify('error', {
+                            className: 'in-page-edit',
+                            title: '该页面似乎不需要Trapper的更新？',
+                            content: data.hint,
+                        });
+                    }
+                }
             }
             else {
-                if (data["text"] != "") {
-                    ssi_modal.notify('error', {
-                        className: 'in-page-edit',
-                        title: '该页面似乎不需要Trapper的更新？',
-                        content: data.hint,
-                    });
-                }
+                ssi_modal.notify('error', {
+                    className: 'in-page-edit',
+                    title: 'Vercel服务器超时了...',
+                    content: "呜呜呜",
+                });
             }
         })
         .catch(e => {

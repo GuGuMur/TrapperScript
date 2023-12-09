@@ -9,5 +9,6 @@ mw.loader.load('/index.php?title=User:GuBot/trapper.js&action=raw&ctype=text/jav
 
 ## 导出requirements
 ```
+pdm update --unconstrained
 pdm export -o requirements.txt --without-hashes
 ```

@@ -2,9 +2,10 @@ import argparse
 from mwbot import Bot
 import asyncio
 from pathlib import Path
+from jsmin import jsmin
 
 
-async def main(password:str):
+async def main(password: str):
     bot = Bot(
         sitename="PRTS",
         api="https://prts.wiki/api.php",
@@ -13,16 +14,21 @@ async def main(password:str):
         password=password,
     )
     await bot.login()
-    jspath = str (Path(__file__).parent / "main.js" )
-    js = Path(jspath).read_text()
+    jspath = str(Path(__file__).parent / "main.js")
+    js = Path(jspath).read_text(encoding="utf-8")
+    js = jsmin(js)
     ori = await bot.get_page_text("User:GuBot/trapper.js")
     if js == ori:
         print("PASS")
     else:
-        await bot.edit_page(title="User:GuBot/trapper.js",text=js,summary="//Edit by GithubActionBot.")
+        await bot.edit_page(
+            title="User:GuBot/trapper.js", text=js, summary="//Edit by GithubActionBot."
+        )
         await bot.purge(title="User:GuBot/trapper.js")
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='update js')
-    parser.add_argument('password')
+    parser = argparse.ArgumentParser(description="update js")
+    parser.add_argument("password")
     args = parser.parse_args()
     asyncio.get_event_loop().run_until_complete(main(password=args.password))

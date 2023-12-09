@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
-from stage import return_text
+from stage.internet import return_text as rti
+from stage.local import return_text as rtl
 
 app = FastAPI()
 
@@ -26,7 +27,12 @@ async def root():
 
 @app.post("/main")
 async def main(pagetext: str = Form()):
-    return await return_text(pagetext=pagetext)
+    return await rti(pagetext=pagetext)
+
+
+@app.post("/mainlocal")
+async def main(pagetext: str = Form()):
+    return await rtl(pagetext=pagetext)
 
 
 @app.get("/favicon.ico")
