@@ -26,8 +26,8 @@ async def main(password: str):
 
 
 if __name__ == "__main__":
-    # parser = argparse.ArgumentParser(description="update js")
-    # parser.add_argument("password")
-    # args = parser.parse_args()
-    # asyncio.get_event_loop().run_until_complete(main(password=args.password))
-    asyncio.run(main("A"))
+    parser = argparse.ArgumentParser(description="update js")
+    parser.add_argument("password")
+    args = parser.parse_args()
+    asyncio.get_event_loop().run_until_complete(main(password=args.password))
+    # asyncio.run(main("A"))
