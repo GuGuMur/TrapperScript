@@ -33,7 +33,7 @@ def cell_deal_token(data: dict) -> dict:
             print(trap_cell_format)
             traptype = trap_cell_format["type"]
             for i in trap_cell_format["params"].keys():
-                if i.startwith("装置技能"):
+                if "装置技能" in i:
                     result.pop("装置技能")
                     break
             for k, v in trap_cell_format["params"].items():
@@ -134,7 +134,7 @@ async def return_text(pagetext: str):
     if stage_id:
         ...  # continue
     else:
-        return {"status": False, "text": wikicode, "hint": ""}
+        return {"status": False, "text": pagetext, "hint": ""}
     # 然后再开始获取数据
     character_table = await arktool.read_ark_file("excel/character_table.json")
     skill_table = await arktool.read_ark_file("excel/skill_table.json")

@@ -1,8 +1,14 @@
 import mwparserfromhell
 from mwbot import arktool
 from .utils import *
+from typing import Union
+from loguru import logger
 
 arktool.GameDataPosition = "E:/ArknightsGameData/zh_CN/gamedata"
+unwritetiles = ""
+tilesformat = ""
+unwritetraps = ""
+trapsformat = ""
 
 
 def cell_deal_token(data: dict) -> dict:
@@ -32,10 +38,10 @@ def cell_deal_token(data: dict) -> dict:
     else:
         if result["装置名称"] in trapsformat.keys():
             trap_cell_format = trapsformat[str(result["装置名称"])]
-            print(trap_cell_format)
+            # logger.debug(trap_cell_format)
             traptype = trap_cell_format["type"]
             for i in trap_cell_format["params"].keys():
-                if i.startwith("装置技能"):
+                if "装置技能" in i:
                     result.pop("装置技能")
                     break
             for k, v in trap_cell_format["params"].items():
@@ -50,7 +56,9 @@ def cell_deal_token(data: dict) -> dict:
                         ORIGINALTPLT=v, **result
                     )
 
-            addition_text = [f"|{k}={v.strip()}" for k, v in trap_cell_format["params"].items()]
+            addition_text = [
+                f"|{k}={v.strip()}" for k, v in trap_cell_format["params"].items()
+            ]
             result["附加文本"] = "\n".join(addition_text)
         else:
             traptype = "未分类装置"
@@ -61,7 +69,7 @@ def cell_deal_token(data: dict) -> dict:
         }
 
 
-def deal_token(stageinfo: dict) -> str:
+def deal_token(stageinfo: dict, unedittrap: bool = True) -> str:
     traptext: [str, list[str]] = {}
     result_text: str = ""
     mainparams = ["predefines", "hardPredefines"]
@@ -84,6 +92,8 @@ def deal_token(stageinfo: dict) -> str:
             #     if v:
             #         for t in v:
     if traptext:
+        if not unedittrap:
+            traptext = {k: v for k,v in traptext.items() if k != "不需要写入页面的装置"}
         for k, v in traptext.items():
             result_text += f"=={k}==\n" + "\n".join(list(set(v)))
             result_text += "\n"
@@ -120,7 +130,10 @@ def deal_tiles(stageinfo: dict):
         return ""
 
 
-async def return_text(pagetext: str):
+async def return_text(
+    pagetext: str,
+    unedittrap: bool = True,
+):
     global unwritetiles, tilesformat, character_table, trapsformat, unwritetraps
     global skill_table, env, TEMPLATES, new_tiles_table, arktool, hint, char
     # 首先处理stage
@@ -128,37 +141,57 @@ async def return_text(pagetext: str):
     if stage_id:
         ...  # continue
     else:
-        return {"status": False, "text": wikicode, "hint": ""}
+        return {"status": False, "text": pagetext, "hint": ""}
     # 然后再开始获取数据
     char = arktool.char()
     character_table = arktool.read_ark_file("excel/character_table.json")
     skill_table = arktool.read_ark_file("excel/skill_table.json")
     new_tiles_table = {}
-    unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
-    tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
-    unwritetraps = await read_prts_static_json("模板:关卡装置/trapper/unwritetraps.json")
-    trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
+    # unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
+    # tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
+    # unwritetraps = await read_prts_static_json(
+    #     "模板:关卡装置/trapper/unwritetraps.json"
+    # )
+    # trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
+    if not unwritetiles:
+        unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
+    if not tilesformat:
+        tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
+    if not unwritetraps:
+        unwritetraps = await read_prts_static_json(
+            "模板:关卡装置/trapper/unwritetraps.json"
+        )
+    if not trapsformat:
+        trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
     hint = []
     wikicode = pagetext[:]
     try:
         stageinfo = arktool.get_stage_info(content=pagetext)
         tiletext = deal_tiles(stageinfo=stageinfo)
-        tokentext = deal_token(stageinfo=stageinfo)
+        tokentext = deal_token(stageinfo=stageinfo, unedittrap=unedittrap)
 
         if tokentext:
             if "==作战进度奖励==" in wikicode:
-                wikicode = wikicode.replace("==作战进度奖励==", f"{tokentext}\n==作战进度奖励==")
+                wikicode = wikicode.replace(
+                    "==作战进度奖励==", f"{tokentext}\n==作战进度奖励=="
+                )
             elif "==材料掉落==" in wikicode:
-                wikicode = wikicode.replace("==材料掉落==", f"{tokentext}\n==材料掉落==")
+                wikicode = wikicode.replace(
+                    "==材料掉落==", f"{tokentext}\n==材料掉落=="
+                )
             else:
-                wikicode = wikicode.replace("==注释与链接==", f"{tokentext}\n==注释与链接==")
+                wikicode = wikicode.replace(
+                    "==注释与链接==", f"{tokentext}\n==注释与链接=="
+                )
         else:
             pass
         # --------------------------------------------------
         if tiletext:
             wikicode = mwparserfromhell.parse(wikicode)
             for template in wikicode.filter_templates():
-                if template.name.matches("普通关卡信息") or template.name.matches("剿灭关卡信息"):
+                if template.name.matches("普通关卡信息") or template.name.matches(
+                    "剿灭关卡信息"
+                ):
                     template.add("特殊地形效果", f"{tiletext}")
                     continue
             wikicode = str(wikicode)
