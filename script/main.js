@@ -29,7 +29,7 @@ async function get_data() {
         referrerPolicy: "no-referrer-when-downgrade",
         mode: "cors"
     };
-    await fetch(`https://trapper-script.gudev.online/main`, requestOptions)
+    await fetch(`https://trapper-script.gugumur.eu.org/main`, requestOptions)
         .then(response => {
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
