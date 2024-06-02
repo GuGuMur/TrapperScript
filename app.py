@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
-from stage.internet import return_text as rti
-from stage.local import return_text as rtl
+from src.internet import return_text as rti
+from src.local import return_text as rtl
 
 app = FastAPI()
 

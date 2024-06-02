@@ -19,5 +19,5 @@ requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
 
-[tool.pdm.build]
-includes = ["assets/", "stage/", "app.py", "stage.py"]
+[tool.pdm]
+includes = ["assets/", "src/", "app.py", "stage.py"]

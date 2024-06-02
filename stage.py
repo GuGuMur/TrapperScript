@@ -3,7 +3,7 @@ from mwbot import utils
 from mwbot.arktool_internet import arktool as att
 from jinja2 import Environment
 from pathlib import Path
-from stage.utils import *
+from src.utils import *
 
 
 def cell_deal_token(data: dict) -> dict:
