@@ -20,4 +20,4 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [tool.pdm.build]
-package-dir = "stage"
+includes = ["assets/", "stage/", "app.py", "stage.py"]
