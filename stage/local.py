@@ -34,6 +34,10 @@ def cell_deal_token(data: dict) -> dict:
             trap_cell_format = trapsformat[str(result["装置名称"])]
             print(trap_cell_format)
             traptype = trap_cell_format["type"]
+            for i in trapsformat["params"].keys():
+                if i.startwith("装置技能"):
+                    result.pop("装置技能")
+                    break
             for k, v in trap_cell_format["params"].items():
                 if isinstance(v, list):
                     v_d = "\n".join(v)  # value_dealt
