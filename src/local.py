@@ -5,10 +5,10 @@ from typing import Union
 from loguru import logger
 
 arktool.GameDataPosition = "E:/ArknightsGameData/zh_CN/gamedata"
-unwritetiles = ""
-tilesformat = ""
-unwritetraps = ""
-trapsformat = ""
+# unwritetiles = ""
+# tilesformat = ""
+# unwritetraps = ""
+# trapsformat = ""
 
 
 def cell_deal_token(data: dict) -> dict:
@@ -132,6 +132,10 @@ def deal_tiles(stageinfo: dict):
 
 async def return_text(
     pagetext: str,
+    unwritetiles1,
+    tilesformat1,
+    unwritetraps1,
+    trapsformat1,
     unedittrap: bool = True,
 ):
     global unwritetiles, tilesformat, character_table, trapsformat, unwritetraps
@@ -153,16 +157,20 @@ async def return_text(
     #     "模板:关卡装置/trapper/unwritetraps.json"
     # )
     # trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
-    if not unwritetiles:
-        unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
-    if not tilesformat:
-        tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
-    if not unwritetraps:
-        unwritetraps = await read_prts_static_json(
-            "模板:关卡装置/trapper/unwritetraps.json"
-        )
-    if not trapsformat:
-        trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
+    # if not unwritetiles:
+    #     unwritetiles = await read_prts_static_json("特殊地形/trapper/unwritetiles.json")
+    # if not tilesformat:
+    #     tilesformat = await read_prts_static_json("特殊地形/trapper/tilesformat.json")
+    # if not unwritetraps:
+    #     unwritetraps = await read_prts_static_json(
+    #         "模板:关卡装置/trapper/unwritetraps.json"
+    #     )
+    # if not trapsformat:
+    #     trapsformat = await read_prts_static_json("模板:关卡装置/trapper/trapsformat.json")
+    unwritetiles = unwritetiles1
+    tilesformat = tilesformat1
+    trapsformat = trapsformat1
+    unwritetraps = unwritetraps1
     hint = []
     wikicode = pagetext[:]
     try:

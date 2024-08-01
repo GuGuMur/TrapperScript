@@ -6,14 +6,14 @@ authors = [
     {name = "GuGuMur", email = "2221533105@qq.com"},
 ]
 dependencies = [
-    "mwbot>=1.0.35",
+    "mwbot>=1.0.37",
     "mwparserfromhell>=0.6.6",
     "httpx>=0.27.0",
     "jinja2>=3.1.4",
     "loguru>=0.7.2",
     "python-multipart>=0.0.9",
-    "fastapi>=0.111.0",
-    "uvicorn[standard]>=0.30.0",
+    "fastapi>=0.111.1",
+    "uvicorn[standard]>=0.30.4",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
