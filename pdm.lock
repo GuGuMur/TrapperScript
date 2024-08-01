@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:55a1ebc4d3ea7b51997d246d8cc145291a37c2090ecb345f872587c13698d881"
+content_hash = "sha256:6597b2225743df6bf1c3e3b7e798755ae5b084e929c107be54ed3a62cf79d7e0"
 
 [[package]]
 name = "anyio"
@@ -292,7 +292,7 @@ files = [
 
 [[package]]
 name = "mwbot"
-version = "1.0.37"
+version = "1.0.38"
 requires_python = "<4.0,>=3.9"
 summary = "个性化封装的Python Mediawiki API库"
 dependencies = [
@@ -305,8 +305,8 @@ dependencies = [
     "xmltodict>=0.13.0",
 ]
 files = [
-    {file = "mwbot-1.0.37-py3-none-any.whl", hash = "sha256:5056c7a2fa2c941853c968510082def15011173a832880e2d12deff25f24ba0e"},
-    {file = "mwbot-1.0.37.tar.gz", hash = "sha256:fc0c90fcaeac7cf85c933307982aedda5ddcb904ab8738d8b41ad16a43d3d163"},
+    {file = "mwbot-1.0.38-py3-none-any.whl", hash = "sha256:9ace121afe211271d4d982b83d9be5c029077a36a2952fed7bb567e22eb43bc8"},
+    {file = "mwbot-1.0.38.tar.gz", hash = "sha256:31350b7f33d7627bc965759c38cf0ee05256aec066ee8b52bc91fd97a53839ac"},
 ]
 
 [[package]]
